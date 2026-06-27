@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showroom Motor Bekas - Top Up Style</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+    --primary-color: #ffcc00;    /* Kuning emas terang */
+    --secondary-color: #1e1e24;  /* Hitam elegan */
+    --bg-color: #141416;         /* Latar belakang gelap */
+    --card-color: #2a2a30;       /* Kotak abu-abu */
+    --text-color: #ffffff;
+    --text-muted: #b1b1b7;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 50px;
+            overflow-x: hidden;
+        }
+
+        /* Navbar / Header */
+        header {
+            background-color: var(--secondary-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .logo-text h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        .logo-text span {
+            color: var(--primary-color);
+        }
+
+        /* Tombol Garis 3 (Hamburger Menu) */
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: 0.3s;
+        }
+
+        .menu-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        /* Sidebar Menu Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px; /* Sembunyi di kanan */
+            width: 280px;
+            height: 100%;
+            background-color: var(--secondary-color);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            z-index: 200;
+            transition: right 0.3s ease;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            right: 0; /* Muncul */
+        }
+
+        .close-sidebar-btn {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .close-sidebar-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: var(--card-color);
+            color: var(--primary-color);
+        }
+
+        /* Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            z-index: 150;
+            display: none;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Hero & Search Section */
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, var(--secondary-color) 0%, var(--bg-color) 100%);
+        }
+
+        .hero-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 20px auto 0 auto;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: none;
+            border-radius: 30px;
+            background-color: var(--card-color);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 74, 87, 0.2);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Product Grid */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .grid-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid-title i {
+            color: var(--primary-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--card-color);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            border-color: var(--primary-color);
+        }
+
+        .product-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 75px; 
+            background-color: #1f1f2e;
+        }
+
+        .product-img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-tahun {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .product-km {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Modal / Pop-up Detail */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: var(--secondary-color);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .modal-price {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .detail-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .spec-item {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .spec-item strong {
+            color: white;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .buy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background-color: #25d366; 
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .buy-btn:hover {
+            background-color: #20ba56;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="logo-container">
+            <img src="https://i.ibb.co.com/gcPFkkh/Proyek-Baru-6-32-D0-F1-A.png" alt="Logo Bisnis" class="logo-img">
+            <div class="logo-text">
+                <h1>BINA KARYA<span>MOTOR</span></h1>
+            </div>
+        </div>
+        <!-- Tombol Garis 3 -->
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <button class="close-sidebar-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fa-solid fa-motorcycle"></i> Motor Second</a></li>
+            <li><a href="https://wa.me/6285810144127?text=Permisi%20Pak,%20saya%20ingin%20bertanya%20mengenai%20motor%20baru" target="_blank"><i class="fa-brands fa-whatsapp"></i> Beli Motor Baru to Admin</a></li>
+            <li><a href="#" target="_blank"><i class="fa-brands fa-tiktok"></i> TikTok</a></li>
+            <li><a href="tentang.html"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a></li>
+            <li><a href="https://maps.app.goo.gl/pRiM3vefCmUfwEo19"><i class="fa-solid fa-location-dot"></i> Lokasi Showroom</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero & Search Section -->
+    <div class="hero-section">
+        <h2>Cari Motor Impianmu Bekas dan Baru</h2>
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Ketik nama motor (contoh: Beat, Nmax)..." onkeyup="searchProduct()">
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h3 class="grid-title"><i class="fa-solid fa-motorcycle"></i> Ready Stock Motor Second</h3>
+        
+        <div class="product-grid" id="product-grid">
+            <!-- Data Produk Motor Bekas -->
+            <div class="product-card" onclick="openModal('Honda Vario Karbu 110', 'Rp 4.00.000', '2010', 'unknown km', 'A (Banten)', 'Pajak Mati', 'https://i.ibb.co.com/TDxGcbk8/IMG-20260606-110843.jpg')">
+                <div class="product-img-wrapper">
+                    <span class="badge-tahun">2010</span>
+                    <img src="https://i.ibb.co.com/Cp9rtm4x/New-motor-929-DAB9.png" alt="Motor">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Honda Vario Karbu 110cc</div>
+                    <div class="product-price">Rp 4.000.000</div>
+                    <div class="product-km"><i class="fa-solid fa-gauge"></i> unknown km</div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal('Honda Vario 160', 'Rp 18.000.000', '2021', '18.200 km', 'A (Banten)', 'Pajak Hidup', 'https://i.ibb.co.com/Dhjj0Fs/IMG-20260606-110926.jpg')">
+                <div class="product-img-wrapper">
+                    <span class="badge-tahun">2022</span>
+                    <img src="https://i.ibb.co.com/s9fvqQtb/New-motor-6888646.png" alt="Motor">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Honda Vario 160</div>
+                    <div class="product-price">Rp 18.000.000</div>
+                    <div class="product-km"><i class="fa-solid fa-gauge"></i> 18.200 km</div>
+                </div>
+            </div>
+
+            <!-- Pesan jika pencarian kosong -->
+            <div class="no-results" id="no-results">
+                <i class="fa-solid fa-motorcycle-slash" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                <p>Motor yang Anda cari tidak ditemukan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up Modal Detail Produk -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal(event)"><i class="fa-solid fa-xmark"></i></button>
+            <img src="" alt="Detail Motor" class="modal-img" id="modal-img">
+            
+            <div class="modal-body">
+                <div class="modal-title" id="modal-title">Nama Motor</div>
+                <div class="modal-price" id="modal-price">Harga Motor</div>
+                
+                <div class="detail-specs">
+                    <div class="spec-item">Tahun <strong><span id="spec-tahun">-</span></strong></div>
+                    <div class="spec-item">Jarak Tempuh <strong><span id="spec-km">-</span></strong></div>
+                    <div class="spec-item">Plat Nomor <strong><span id="spec-plat">-</span></strong></div>
+                    <div class="spec-item">Status Pajak <strong><span id="spec-pajak">-</span></strong></div>
+                </div>
+
+                <!-- Tombol Beli Langsung Terintegrasi WhatsApp -->
+                <a href="https://wa.me/6285810144127" target="_blank" class="buy-btn" id="whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Hubungi via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // NOMOR WHATSAPP ANDA (Ganti dengan nomor Anda, awali dengan 62)
+        const NOMOR_WHATSAPP = "6285810144127"; 
+
+        // Fungsi Buka/Tutup Sidebar Menu
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Fungsi Pencarian Real-time
+        function searchProduct() {
+            let input = document.getElementById('search-input').value.toLowerCase();
+            let cards = document.getElementsByClassName('product-card');
+            let anyMatch = false;
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].querySelector('.product-name').innerText.toLowerCase();
+                if (name.includes(input)) {
+                    cards[i].style.display = "block";
+                    anyMatch = true;
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+
+            let noResults = document.getElementById('no-results');
+            if (anyMatch) {
+                noResults.style.display = "none";
+            } else {
+                noResults.style.display = "block";
+            }
+        }
+
+        // Fungsi Membuka Pop-up & Setting Data Otomatis
+        function openModal(nama, harga, tahun, km, plat, pajak, imgUrl) {
+            document.getElementById('modal-title').innerText = nama;
+            document.getElementById('modal-price').innerText = harga;
+            document.getElementById('spec-tahun').innerText = tahun;
+            document.getElementById('spec-km').innerText = km;
+            document.getElementById('spec-plat').innerText = plat;
+            document.getElementById('spec-pajak').innerText = pajak;
+            document.getElementById('modal-img').src = imgUrl;
+
+            let teksWA = `Halo admin, saya tertarik dengan motor bekas yang ada di website:\n\n` +
+                         `*Motor:* ${nama}\n` +
+                         `*Harga:* ${harga}\n` +
+                         `*Tahun:* ${tahun}\n\n` +
+                         `Apakah unit ini masih tersedia?`;
+            
+            let encodedText = encodeURIComponent(teksWA);
+            document.getElementById('whatsapp-btn').href = `https://wa.me/${NOMOR_WHATSAPP}?text=${encodedText}`;
+
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function closeModal(event) {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
